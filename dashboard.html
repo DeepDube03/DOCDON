@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>DOCDON - Dashboard</title>
+
+  <!-- PWA & Mobile Web App Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border-light: #e2e8f0;
+      --border-focus: #06b6d4;
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --indigo: #4f46e5;
+      --rose: #e11d48;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .brand-gradient {
+      background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Page 2 Master Container */
+    .page2-container {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-page);
+      position: relative;
+    }
+
+    /* Page 2 Top Header */
+    .page2-header {
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 1.5px solid var(--border-light);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-brand-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-app-title {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #0f172a;
+    }
+
+    /* Right Top Side: Logo + Login Name + Three Lines Setting Button */
+    .header-user-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo-mini {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-user-tag {
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+    }
+
+    .header-username {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .header-user-status {
+      font-size: 10px;
+      font-weight: 600;
+      color: #059669;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px;
+    }
+
+    /* Three lines hamburger button */
+    .btn-hamburger {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background-color: #f1f5f9;
+      border: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #0f172a;
+    }
+
+    .btn-hamburger:hover {
+      background-color: #e2e8f0;
+    }
+
+    .hamburger-line {
+      width: 18px;
+      height: 2px;
+      background-color: #0f172a;
+      border-radius: 2px;
+    }
+
+    /* Page 2 Main Content (Two Interfaces: Storage & Verification) */
+    .page2-content {
+      flex: 1;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px 16px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .interfaces-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .interfaces-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+    }
+
+    /* Interface Card (Storage & Verification) */
+    .interface-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .interface-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      border-color: #06b6d4;
+    }
+
+    .interface-top {
+      margin-bottom: 20px;
+    }
+
+    .interface-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .interface-icon-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .badge-storage {
+      background-color: #cffafe;
+      color: #0891b2;
+      border: 1px solid #a5f3fc;
+    }
+
+    .badge-verification {
+      background-color: #d1fae5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+
+    .interface-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .interface-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .interface-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    /* Stored Items Preview Chips */
+    .docs-preview-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .doc-chip {
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      background-color: #f8fafc;
+      border: 1px solid var(--border-light);
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .interface-action-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: var(--radius-lg);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-storage {
+      background-color: #0891b2;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(8, 145, 178, 0.25);
+    }
+    .btn-storage:hover { background-color: #0e7490; }
+
+    .btn-verification {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    }
+    .btn-verification:hover { opacity: 0.95; }
+
+    /* ==========================================================================
+       RIGHT DOWN CORNER: AI AGENT WIDGET
+       ========================================================================== */
+    .agent-floating-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    @keyframes floatAgent {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-4px); }
+    }
+
+    /* Agent Speech/Notification Bubble */
+    .agent-speech-bubble {
+      background: #ffffff;
+      border: 1.5px solid var(--border-light);
+      padding: 10px 14px;
+      border-radius: 16px 16px 4px 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      max-width: 240px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: floatAgent 3s ease-in-out infinite alternate;
+      cursor: pointer;
+    }
+
+    .agent-dot-online {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #10b981;
+      box-shadow: 0 0 0 2px #d1fae5;
+    }
+
+    /* Agent Button */
+    .agent-trigger-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #4f46e5 100%);
+      box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35);
+      border: 3px solid #ffffff;
+      color: #ffffff;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .agent-trigger-btn:hover {
+      transform: scale(1.08) rotate(5deg);
+      box-shadow: 0 12px 30px rgba(6, 182, 212, 0.45);
+    }
+
+    .agent-notif-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: #e11d48;
+      border: 2px solid #ffffff;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Agent Dialog Popover Box */
+    .agent-dialog-card {
+      width: 320px;
+      background: #ffffff;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 8px;
+    }
+
+    .agent-dialog-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .agent-dialog-body {
+      padding: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    /* ==========================================================================
+       THREE LINES SETTINGS SLIDEOVER DRAWER
+       ========================================================================== */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1100;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .settings-drawer {
+      width: 100%;
+      max-width: 340px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 20px;
+      animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 18px;
+    }
+
+    .drawer-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    /* Profile Card in Drawer */
+    .drawer-profile-card {
+      padding: 14px;
+      background-color: #f8fafc;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .profile-avatar-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .drawer-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .drawer-menu-item {
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .drawer-menu-item:hover {
+      background-color: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .btn-logout-drawer {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      background-color: #fff1f2;
+      border: 1.5px solid #fecdd3;
+      color: #e11d48;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-logout-drawer:hover {
+      background-color: #ffe4e6;
+    }
+
+    /* Generic Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1200;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 360px;
+      background-color: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-light);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #0891b2;
+    }
+
+    .btn-close-modal {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .modal-info-box {
+      padding: 10px;
+      background-color: #ecfeff;
+      border: 1px solid #cffafe;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      color: #0e7490;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+      background-color: #f8fafc;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover { background-color: #f1f5f9; }
+
+    /* Toast */
+    #toast-container {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 380px;
+      z-index: 10000;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast-item {
+      pointer-events: auto;
+      padding: 12px 16px;
+      background-color: #ffffff;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Modal Container for Actions -->
+  <div id="modal-container"></div>
+
+  <!-- Settings Slide-Over Drawer (Three lines hamburger menu) -->
+  <div id="settings-drawer-backdrop" class="hidden drawer-backdrop" onclick="closeSettingsDrawer(event)">
+    <div class="settings-drawer" onclick="event.stopPropagation()">
+      <div>
+        <!-- Drawer Header -->
+        <div class="drawer-header">
+          <span class="drawer-title">Settings & Profile</span>
+          <button onclick="toggleSettingsDrawer()" style="background:none; border:none; font-size:18px; color:#94a3b8; cursor:pointer;">✕</button>
+        </div>
+
+        <!-- Profile Info Card -->
+        <div class="drawer-profile-card">
+          <div class="profile-avatar-circle" id="drawer-user-avatar">D</div>
+          <div>
+            <div id="drawer-user-name" style="font-weight:800; font-size:14px; color:#0f172a;">David Miller</div>
+            <div id="drawer-user-id" style="font-size:11px; color:#64748b;">david.miller</div>
+            <div style="font-size:10px; color:#059669; font-weight:700; margin-top:2px;">✔ Biometrics Verified</div>
+          </div>
+        </div>
+
+        <!-- Settings List -->
+        <div class="drawer-menu-list">
+          <div class="drawer-menu-item" onclick="showToast('Profile', 'Opening profile details...', 'info')">
+            <span>👤</span> Profile Information
+          </div>
+          <div class="drawer-menu-item" onclick="showToast('Notifications', 'Notification preferences saved.', 'info')">
+            <span>🔔</span> Notifications & Alerts
+          </div>
+          <div class="drawer-menu-item" onclick="showToast('Security', 'Biometrics (Face/Fingerprint) Active.', 'info')">
+            <span>🔒</span> Biometric & Security
+          </div>
+          <div class="drawer-menu-item" onclick="showToast('Privacy', 'Zero-Knowledge Encryption Active.', 'info')">
+            <span>🛡️</span> Privacy & Access Control
+          </div>
+          <div class="drawer-menu-item" onclick="showToast('Help', 'Support & FAQ available.', 'info')">
+            <span>❓</span> Help & Support
+          </div>
+        </div>
+      </div>
+
+      <!-- Logout Button (Redirects cleanly to index.html) -->
+      <div>
+        <button onclick="handleLogout()" class="btn-logout-drawer">
+          <span>🚪</span> Logout from DOCDON
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Master Page 2 Layout -->
+  <div class="page2-container">
+    
+    <!-- Top Header: Logo and Login Name on RIGHT side + Three lines setting button -->
+    <header class="page2-header">
+      
+      <!-- Left side: App Name -->
+      <div class="header-brand-left">
+        <span class="header-app-title">DOC<span class="brand-gradient">DON</span></span>
+      </div>
+
+      <!-- Right Top Side (As requested: Logo + Login Name + Three Lines ☰) -->
+      <div class="header-user-right">
+        
+        <!-- User Login Name -->
+        <div class="header-user-tag">
+          <span class="header-username" id="header-user-display">David Miller</span>
+          <span class="header-user-status">● Verified</span>
+        </div>
+
+        <!-- Logo on Right Top -->
+        <div class="header-logo-mini">
+          <svg viewBox="0 0 160 160" fill="none" style="width:100%; height:100%;">
+            <rect x="24" y="32" width="60" height="96" rx="12" fill="#3b82f6" opacity="0.8" transform="rotate(-10 24 32)"/>
+            <rect x="42" y="24" width="62" height="102" rx="14" fill="#38bdf8" opacity="0.9" transform="rotate(-5 42 24)"/>
+            <rect x="62" y="18" width="66" height="112" rx="16" fill="#34d399"/>
+            <circle cx="95" cy="94" r="22" fill="#10b981"/>
+            <path d="M86 94.5 L92.5 101 L105 87" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Three Lines Setting Button (Hamburger ☰) -->
+        <button onclick="toggleSettingsDrawer()" class="btn-hamburger" title="Settings & Profile">
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Main Page 2 Body Content -->
+    <main class="page2-content">
+      
+      <!-- Welcome Greeting -->
+      <div>
+        <h2 style="font-size:22px; font-weight:800; color:#0f172a;">
+          Welcome back, <span id="welcome-name" class="brand-gradient">David Miller</span>
+        </h2>
+        <p style="font-size:13px; color:#64748b; margin-top:2px;">
+          Select an interface to manage your document vault or start a new verification.
+        </p>
+      </div>
+
+      <!-- TWO INTERFACES: 1. Storage & 2. Verification (As requested!) -->
+      <div class="interfaces-grid">
+        
+        <!-- INTERFACE 1: STORAGE (Document Vault) -->
+        <div class="interface-card">
+          <div class="interface-top">
+            <div class="interface-badge-row">
+              <div class="interface-icon-badge badge-storage">
+                📁
+              </div>
+              <span class="interface-pill">3 Vault Docs</span>
+            </div>
+
+            <h3 class="interface-title">Storage Vault</h3>
+            <p class="interface-desc">
+              Your encrypted document storage. View stored credentials or securely store new official documents in your app.
+            </p>
+
+            <!-- Stored Document Chips -->
+            <div class="docs-preview-chips">
+              <div class="doc-chip">
+                <span>📘</span> Passport (Valid 2031)
+              </div>
+              <div class="doc-chip">
+                <span>🪪</span> Driver License
+              </div>
+              <div class="doc-chip">
+                <span>📄</span> Utility Statement
+              </div>
+            </div>
+          </div>
+
+          <button onclick="openStorageActionModal()" class="interface-action-btn btn-storage">
+            <span>+ Store New Document</span>
+          </button>
+        </div>
+
+        <!-- INTERFACE 2: VERIFICATION (Verify New Document) -->
+        <div class="interface-card">
+          <div class="interface-top">
+            <div class="interface-badge-row">
+              <div class="interface-icon-badge badge-verification">
+                🛡️
+              </div>
+              <span class="interface-pill" style="background:#ecfdf5; color:#059669;">Verified Mesh</span>
+            </div>
+
+            <h3 class="interface-title">Verification Center</h3>
+            <p class="interface-desc">
+              Verify credentials with Person B or an office verifier. Scan, inspect, and certify new documents with AI liveness.
+            </p>
+
+            <div class="docs-preview-chips">
+              <div class="doc-chip" style="background:#f0fdf4; border-color:#bbf7d0; color:#166534;">
+                <span>✔</span> 100% Identity Integrity
+              </div>
+              <div class="doc-chip">
+                <span>⚡</span> Instant OCR & Validity
+              </div>
+            </div>
+          </div>
+
+          <button onclick="openVerifyNewDocModal()" class="interface-action-btn btn-verification">
+            <span>Verify New Document ➔</span>
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- ==========================================================================
+         RIGHT DOWN CORNER: AI AGENT (Used for info of person & notifications)
+         ========================================================================== -->
+    <div class="agent-floating-container">
+      
+      <!-- Agent Interactive Dialog Box (Opens on click) -->
+      <div id="agent-dialog-popover" class="hidden agent-dialog-card">
+        <div class="agent-dialog-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:16px;">🤖</span>
+            <div>
+              <div style="font-size:12px; font-weight:800;">DOCDON Assistant</div>
+              <div style="font-size:9px; color:#a5f3fc;">Person Info & Guidance Agent</div>
+            </div>
+          </div>
+          <button onclick="toggleAgentDialog()" style="background:none; border:none; color:#cbd5e1; font-size:14px; cursor:pointer;">✕</button>
+        </div>
+
+        <div class="agent-dialog-body" id="agent-dialog-content">
+          <div style="margin-bottom:10px; padding:10px; background:#f8fafc; border-radius:10px; border:1px solid #e2e8f0;">
+            <div style="font-weight:700; color:#0f172a; font-size:12px; margin-bottom:2px;">
+              👤 Person Information:
+            </div>
+            <div id="agent-user-info-text">
+              Name: <strong>David Miller</strong><br>
+              Status: <strong>Active & Biometrically Verified</strong><br>
+              Storage: <strong>3 Documents Saved</strong>
+            </div>
+          </div>
+
+          <div style="padding:10px; background:#ecfeff; border-radius:10px; border:1px solid #cffafe; font-size:11px; color:#0e7490;">
+            💡 <strong>Agent Notification:</strong> Do you want to store a new document? Click <em>"Store New Document"</em> or ask me to guide you!
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Speech Notification Pill -->
+      <div id="agent-speech-bubble" class="agent-speech-bubble" onclick="toggleAgentDialog()">
+        <span class="agent-dot-online"></span>
+        <span>Hi <span id="agent-bubble-name">David</span>! Need help storing or verifying?</span>
+      </div>
+
+      <!-- Floating Circular Agent Button -->
+      <button onclick="toggleAgentDialog()" class="agent-trigger-btn" title="DOCDON Agent">
+        <span>🤖</span>
+        <div class="agent-notif-badge">1</div>
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Audio Feedback
+    const AudioFeedback = {
+      ctx: null,
+      init() {
+        if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      },
+      playBeep(freq = 600, duration = 0.12) {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      },
+      playSuccess() {
+        this.playBeep(523.25, 0.1);
+        setTimeout(() => this.playBeep(659.25, 0.1), 100);
+        setTimeout(() => this.playBeep(783.99, 0.2), 200);
+      },
+      playScan() { this.playBeep(880, 0.08); },
+      playWarning() { this.playBeep(320, 0.2); }
+    };
+
+    // Toast
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'toast-item';
+      toast.style.borderLeft = type === 'success' ? '4px solid #10b981' : type === 'error' ? '4px solid #e11d48' : '4px solid #06b6d4';
+      toast.innerHTML = '<strong>' + title + '</strong><div style="font-size:11px; color:#475569; margin-top:2px;">' + message + '</div>';
+      container.appendChild(toast);
+      setTimeout(() => { toast.remove(); }, 3500);
+    }
+
+    // Load Logged In User
+    function loadCurrentUser() {
+      let user = null;
+      try {
+        const stored = localStorage.getItem('docdon_current_user');
+        if (stored) user = JSON.parse(stored);
+      } catch (e) {}
+
+      if (!user) {
+        user = { name: 'David Miller', identifier: 'david.miller' };
+      }
+
+      // Populate UI with User Info
+      const headerName = document.getElementById('header-user-display');
+      if (headerName) headerName.textContent = user.name;
+
+      const welcomeName = document.getElementById('welcome-name');
+      if (welcomeName) welcomeName.textContent = user.name;
+
+      const drawerName = document.getElementById('drawer-user-name');
+      if (drawerName) drawerName.textContent = user.name;
+
+      const drawerId = document.getElementById('drawer-user-id');
+      if (drawerId) drawerId.textContent = user.identifier;
+
+      const drawerAvatar = document.getElementById('drawer-user-avatar');
+      if (drawerAvatar) drawerAvatar.textContent = (user.name || 'D').charAt(0).toUpperCase();
+
+      const bubbleName = document.getElementById('agent-bubble-name');
+      if (bubbleName) bubbleName.textContent = (user.name || 'David').split(' ')[0];
+
+      const agentUserInfo = document.getElementById('agent-user-info-text');
+      if (agentUserInfo) {
+        agentUserInfo.innerHTML = 'Name: <strong>' + user.name + '</strong><br>ID: <strong>' + user.identifier + '</strong><br>Status: <strong>Active & Verified</strong><br>Storage: <strong>3 Documents Saved</strong>';
+      }
+    }
+
+    // Settings Drawer Controls
+    function toggleSettingsDrawer() {
+      const drawer = document.getElementById('settings-drawer-backdrop');
+      if (!drawer) return;
+      if (drawer.classList.contains('hidden')) {
+        drawer.classList.remove('hidden');
+        drawer.style.display = 'flex';
+        AudioFeedback.playScan();
+      } else {
+        closeSettingsDrawer();
+      }
+    }
+
+    function closeSettingsDrawer(e) {
+      const drawer = document.getElementById('settings-drawer-backdrop');
+      if (drawer) {
+        drawer.classList.add('hidden');
+        drawer.style.display = 'none';
+      }
+    }
+
+    // AI Agent Dialog Controls (Right Down Corner)
+    function toggleAgentDialog() {
+      const popover = document.getElementById('agent-dialog-popover');
+      if (!popover) return;
+      if (popover.classList.contains('hidden')) {
+        popover.classList.remove('hidden');
+        popover.style.display = 'flex';
+        AudioFeedback.playBeep(750, 0.1);
+      } else {
+        popover.classList.add('hidden');
+        popover.style.display = 'none';
+      }
+    }
+
+    // Interface 1 Action: Store New Document
+    function openStorageActionModal() {
+      AudioFeedback.playScan();
+      const modal = document.getElementById('modal-container');
+      if (!modal) return;
+
+      modal.innerHTML = `
+        <div class="modal-backdrop">
+          <div class="modal-card">
+            <div class="modal-header">
+              <span style="color:#0891b2;">📁 Store New Document</span>
+              <button type="button" onclick="closeModal()" class="btn-close-modal">✕</button>
+            </div>
+            <div class="modal-info-box">
+              Choose how you want to add your new document to DOCDON Vault:
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+              <button onclick="simulateAddDoc('Passport / National ID')" class="btn-secondary" style="margin:0; text-align:left; justify-content:flex-start; padding:12px;">
+                <span>📷</span> Scan with Camera
+              </button>
+              <button onclick="simulateAddDoc('Upload PDF / Image')" class="btn-secondary" style="margin:0; text-align:left; justify-content:flex-start; padding:12px;">
+                <span>📤</span> Upload from Device
+              </button>
+            </div>
+            <button type="button" onclick="closeModal()" class="btn-secondary">Cancel</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function simulateAddDoc(method) {
+      closeModal();
+      AudioFeedback.playSuccess();
+      showToast('Document Stored', method + ' successfully added to your Storage Vault!', 'success');
+    }
+
+    // Interface 2 Action: Verify New Document
+    function openVerifyNewDocModal() {
+      AudioFeedback.playScan();
+      const modal = document.getElementById('modal-container');
+      if (!modal) return;
+
+      modal.innerHTML = `
+        <div class="modal-backdrop">
+          <div class="modal-card">
+            <div class="modal-header">
+              <span style="color:#059669;">🛡️ Verify New Document</span>
+              <button type="button" onclick="closeModal()" class="btn-close-modal">✕</button>
+            </div>
+            <div class="modal-info-box" style="background:#ecfdf5; border-color:#a7f3d0; color:#065f46;">
+              Select verification mode for your credentials:
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
+              <button onclick="simulateVerifyAction('P2P Verification Request')" class="btn-secondary" style="margin:0; text-align:left; justify-content:flex-start; padding:12px;">
+                <span>🤝</span> Send to Person B for Verification
+              </button>
+              <button onclick="simulateVerifyAction('Office Institutional Review')" class="btn-secondary" style="margin:0; text-align:left; justify-content:flex-start; padding:12px;">
+                <span>🏛️</span> Submit to Office Compliance Queue
+              </button>
+            </div>
+            <button type="button" onclick="closeModal()" class="btn-secondary">Cancel</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function simulateVerifyAction(mode) {
+      closeModal();
+      AudioFeedback.playSuccess();
+      showToast('Verification Initiated', mode + ' generated with secure Request PIN.', 'success');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal-container');
+      if (modal) modal.innerHTML = '';
+    }
+
+    // Logout: Redirects cleanly to index.html (Page 1)
+    function handleLogout() {
+      closeSettingsDrawer();
+      try {
+        localStorage.removeItem('docdon_current_user');
+      } catch (e) {}
+      AudioFeedback.playScan();
+      showToast('Signed Out', 'Redirecting to login...', 'info');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    }
+
+    // Initialize on Page Load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCurrentUser();
+    });
+  </script>
+</body>
+</html>
